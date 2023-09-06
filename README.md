@@ -1,4 +1,4 @@
-# verifiable_learning_for_robust_tree_ensembles
+# Verifiable Learning for Robust Tree Ensembles
 
 This repository contains the implementation of LSE e CARVE proposed by Calzavara et. al. in their research paper titled [Verifiable Learning for Robust Tree Ensembles](https://arxiv.org/abs/2305.03626). This repository also contains the code and the scripts to reproduce the experiments described in the paper.
 
