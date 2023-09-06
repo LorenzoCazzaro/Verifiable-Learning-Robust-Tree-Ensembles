@@ -1,6 +1,6 @@
 # Verifiable Learning for Robust Tree Ensembles
 
-This repository contains the implementation of LSE e CARVE proposed by Calzavara et. al. in their research paper titled [Verifiable Learning for Robust Tree Ensembles](https://arxiv.org/abs/2305.03626). This repository also contains the code and the scripts to reproduce the experiments described in the paper.
+This repository contains the implementation of LSE e CARVE proposed by Calzavara et. al. in their research paper titled [Verifiable Learning for Robust Tree Ensembles](https://arxiv.org/abs/2305.03626) accepted at the ACM Conference on Computer and Communications Security 2023 (CCS 2023). This repository also contains the code and the scripts to reproduce the experiments described in the paper.
 
 ## System configuration
 
@@ -27,8 +27,6 @@ You can produce the training sets and test sets used in our experimental evaluat
 The command for splitting the REWEMA dataset requires uncompressing the zip folder in the rewema folder in the datasets folder.
 
 For the webspam dataset, download the normalized unigram version of the dataset, put the raw dataset in the webspam/dataset folder and execute `python3 prepare_webspam.py` inside the utils folder before executing the command for splitting the dataset.
-
-If you prefer to use our datasets, you can uncompress the zip folders in folders in the datasets folder.
 
 ## Compile the tools
 
