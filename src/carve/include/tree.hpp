@@ -59,8 +59,7 @@ struct tree {
     label_t predict(instance_t const& x) const { return predict(x, m_root); }
 
     std::vector<min_perturbation> reachable(instance_t const& x, float p, float k) const {
-        constexpr float_t eps = 0.0000001;
-
+        
         assert(x.size() == m_num_features);
         std::vector<min_perturbation> L;
         L.reserve(m_num_leaves);
