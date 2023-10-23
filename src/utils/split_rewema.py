@@ -13,6 +13,8 @@ os.system("mkdir " + folder_path + "/models")
 os.system("mkdir " + folder_path + "/models/rf")
 os.system("mkdir " + folder_path + "/models/lse")
 os.system("mkdir " + folder_path + "/models/lse/validation")
+os.system("wget https://www.kaggle.com/code/kerneler/starter-rewema-c5ce57b7-e/input")
+os.system("mv REWEMA.csv {}".format(folder_path + "/dataset"))
 
 #load dataset
 data = pd.read_csv("../../datasets/rewema/dataset/REWEMA.csv").to_numpy()
@@ -27,20 +29,7 @@ X = np.nan_to_num(X)
 min_max_scaler = MinMaxScaler()
 X = min_max_scaler.fit_transform(X)
 
-#Save dataset
-'''
-dataset = np.concatenate((y, X), axis=1)
-dataset_df = pd.DataFrame(dataset)
-dataset_df.to_csv("dataset_normalized.csv", index=False, header=False)
-X_train, X_test, y_train, y_test = train_test_split(X, y, test_size = 0.3, random_state=7, stratify=y)
-train = np.concatenate((y_train, X_train), axis=1)
-test = np.concatenate((y_test, X_test), axis=1)
-train_df = pd.DataFrame(train)
-test_df = pd.DataFrame(test)
-train_df.to_csv("training_set_normalized.csv", index=False, header=False)
-test_df.to_csv("test_set_normalized.csv", index=False, header=False)
-'''
-
+#Save splittings
 dataset = np.concatenate((y, X), axis=1)
 dataset_df = pd.DataFrame(dataset)
 dataset_df.to_csv(folder_path + "/dataset/dataset_normalized.csv", index=False, header=False)

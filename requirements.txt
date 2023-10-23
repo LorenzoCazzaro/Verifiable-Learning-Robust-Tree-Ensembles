@@ -1,0 +1,5 @@
+numpy==1.22.3
+scikit-learn==1.0.2
+argparse==1.1
+pandas==1.4.2
+matplotlib==3.5.1

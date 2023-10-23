@@ -42,7 +42,7 @@ X = np.nan_to_num(X)
 min_max_scaler = MinMaxScaler()
 X = min_max_scaler.fit_transform(X)
 
-#Save dataset
+#Save splittings
 dataset = np.concatenate((y, X), axis=1)
 dataset_df = pd.DataFrame(dataset)
 dataset_df.to_csv(folder_path + "/dataset/dataset_normalized.csv", index=False, header=False)

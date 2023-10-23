@@ -4,20 +4,28 @@ import os
 
 folder_path = "../../datasets/webspam"
 
+#create folders
 os.system("mkdir " + folder_path)
+os.system("mkdir " + folder_path + "/dataset")
 os.system("mkdir " + folder_path + "/models")
 os.system("mkdir " + folder_path + "/models/rf")
 os.system("mkdir " + folder_path + "/models/lse")
 os.system("mkdir " + folder_path + "/models/lse/validation")
+os.system("wget https://www.csie.ntu.edu.tw/~cjlin/libsvmtools/datasets/binary/webspam_wc_normalized_unigram.svm.xz")
+os.system("mv webspam.csv {}".format(folder_path + "/dataset"))
+os.system("python prepare_webspam.py")
 
+#load dataset
 data = pd.read_csv(folder_path + "/dataset/" + "webspam.csv", delimiter=",", header=None)
 
 data.iloc[:, 0] = data.iloc[:, 0].astype(int).astype(str).replace("-1", "0")
 data.iloc[:, 1:] = data.iloc[:, 1:].astype(float).fillna(0)
 
+#Scale in [0-1]
 data.iloc[:, 1:] = (data.iloc[:, 1:] - data.iloc[:, 1:].min())/(data.iloc[:, 1:].max()-data.iloc[:, 1:].min())
 data = data.fillna(0)
 
+#Save splittings
 data_train, data_test = train_test_split(data, test_size = 0.3, random_state=7, stratify=data.iloc[:, 0])
 data_train.to_csv(folder_path + "/dataset/training_set_normalized.csv", index=False, header=False)
 data_test.to_csv(folder_path + "/dataset/test_set_normalized.csv", index=False, header=False)
