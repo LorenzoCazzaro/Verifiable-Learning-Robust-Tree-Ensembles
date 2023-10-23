@@ -9,7 +9,6 @@ from sklearn.metrics import accuracy_score
 from sklearn.ensemble import RandomForestClassifier
 from silva.trainers.classifier_mapper import ClassifierMapper
 import time
-import re
 from partitioned_randomforest import PartitionRandomForest
 
 _SAVE_LSE_PATH = "lse/"
