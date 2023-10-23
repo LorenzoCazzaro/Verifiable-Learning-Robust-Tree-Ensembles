@@ -16,7 +16,6 @@ RUN apt install wget
 WORKDIR /home
 
 RUN mkdir /home/src
-RUN mkdir /home/datasets
 
 COPY requirements.txt ./
 
