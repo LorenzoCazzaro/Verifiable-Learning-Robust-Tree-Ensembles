@@ -1,6 +1,7 @@
 import numpy as np
+import os
 
-f = open("../../datasets/webspam/dataset/webspam_wc_normalized_unigram.svm", "r")
+f = open("./webspam_wc_normalized_unigram.svm", "r")
 lines = f.readlines()
 n_features = 254
 data = np.zeros((len(lines), n_features+1))
@@ -19,3 +20,4 @@ for i, line in enumerate(lines):
 
 print("Saving data!")
 np.savetxt("../../datasets/webspam/dataset/webspam.csv", data, delimiter=",")
+os.system("rm webspam_wc_normalized_unigram.svm")

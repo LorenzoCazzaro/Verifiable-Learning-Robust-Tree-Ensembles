@@ -7,14 +7,10 @@ import os
 folder_path = "../../datasets/rewema"
 
 #create folders
-os.system("mkdir " + folder_path)
-os.system("mkdir " + folder_path + "/dataset")
 os.system("mkdir " + folder_path + "/models")
 os.system("mkdir " + folder_path + "/models/rf")
 os.system("mkdir " + folder_path + "/models/lse")
 os.system("mkdir " + folder_path + "/models/lse/validation")
-os.system("wget https://www.kaggle.com/code/kerneler/starter-rewema-c5ce57b7-e/input")
-os.system("mv REWEMA.csv {}".format(folder_path + "/dataset"))
 
 #load dataset
 data = pd.read_csv("../../datasets/rewema/dataset/REWEMA.csv").to_numpy()

@@ -2,7 +2,7 @@
 
 python3 split_mnist.py
 
-python3 split_fmnist.py
+python3 split_fmnist.py 0 3
 
 python3 split_rewema.py
 

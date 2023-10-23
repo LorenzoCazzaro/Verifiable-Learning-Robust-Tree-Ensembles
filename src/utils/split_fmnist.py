@@ -17,6 +17,7 @@ label1 = args.label1
 folder_path = "../../datasets/fashion_mnist{}-{}".format(label0, label1)
 
 #create folders
+os.system("mkdir ../../datasets")
 os.system("mkdir " + folder_path)
 os.system("mkdir " + folder_path + "/dataset")
 os.system("mkdir " + folder_path + "/models")

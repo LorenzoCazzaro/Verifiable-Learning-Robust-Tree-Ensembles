@@ -12,6 +12,7 @@ RUN update-alternatives --set python3 /usr/bin/python3.8
 RUN apt install python3.8-distutils -y
 RUN apt-get install python3-pip -y
 RUN apt install wget
+RUN apt install xz-utils
 
 WORKDIR /home
 
@@ -22,7 +23,6 @@ COPY requirements.txt ./
 RUN pip3 install -r requirements.txt
 
 COPY src/ /home/src
-COPY datasets/ /home/datasets
 
 RUN apt install -y nano
 

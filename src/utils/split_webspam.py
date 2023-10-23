@@ -5,6 +5,7 @@ import os
 folder_path = "../../datasets/webspam"
 
 #create folders
+os.system("mkdir ../../datasets")
 os.system("mkdir " + folder_path)
 os.system("mkdir " + folder_path + "/dataset")
 os.system("mkdir " + folder_path + "/models")
@@ -12,7 +13,7 @@ os.system("mkdir " + folder_path + "/models/rf")
 os.system("mkdir " + folder_path + "/models/lse")
 os.system("mkdir " + folder_path + "/models/lse/validation")
 os.system("wget https://www.csie.ntu.edu.tw/~cjlin/libsvmtools/datasets/binary/webspam_wc_normalized_unigram.svm.xz")
-os.system("mv webspam.csv {}".format(folder_path + "/dataset"))
+os.system("unxz webspam_wc_normalized_unigram.svm.xz")
 os.system("python prepare_webspam.py")
 
 #load dataset
