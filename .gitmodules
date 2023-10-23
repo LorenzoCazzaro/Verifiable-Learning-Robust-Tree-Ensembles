@@ -1,6 +1,3 @@
 [submodule "src/silva"]
 	path = src/silva
 	url = https://github.com/LorenzoCazzaro/silva.git
-[submodule "src/carve/external/cmd_line_parser"]
-	path = src/carve/external/cmd_line_parser
-	url = https://github.com/jermp/cmd_line_parser
