@@ -1,0 +1,3 @@
+[submodule "src/silva"]
+	path = src/silva
+	url = https://github.com/LorenzoCazzaro/silva
