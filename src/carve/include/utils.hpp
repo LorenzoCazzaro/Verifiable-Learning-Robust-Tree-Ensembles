@@ -61,6 +61,7 @@ double norm(instance_t const& x, float p) {
     }
 }
 
+//compute the most voted label using boyer_moore majority voting algorithm
 label_t boyer_moore_majority_voting(std::vector<label_t> const& labels) {
     label_t candidate = constants::invalid_label;
 

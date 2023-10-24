@@ -2,15 +2,32 @@
 
 This repository contains the implementation of LSE e CARVE proposed by Calzavara et. al. in their research paper titled [Verifiable Learning for Robust Tree Ensembles](https://arxiv.org/abs/2305.03626) accepted at the ACM Conference on Computer and Communications Security 2023 (CCS 2023). This repository also contains the code and the scripts to reproduce the experiments described in the paper.
 
+## Artifact organization
+
+The artifact is organized in the following folders:
+
+- the *datasets* folder contains the datasets used to train the RandomForests and large-spread ensembles along with the models dumped by the the RandomForest algorithm and LSE with the extension *.silva*. See the "Obtain the datasets" section for more details about the subfolders.
+- the *src* folder containing:
+  -  the LSE tool (LSE.py)
+  -  the CARVE tool in the *carve* subfolder. The subfolder *carve/verify* contains the main file of the verifier while the *carve/include* folder contains necessary files that are included in the main file. 
+  -  the SILVA verifier in the *silva* subfolder. The subfolder *silva/trainers* contains scripts used by SILVA to load the datasets and dump the trained models.
+
+## Download the repo
+
+Download the repo using `git clone <repo_link> --recursive` to download also the submodules.
+
 ## System configuration
 
 In the paper you may find some details of the system in which we run the experiments. Here we report some details about the software. Our system used:
 <ul>
-	<li> python 3.8.15 </li>
-	<li> scikit-learn 1.0.2 </li>
-	<li> g++ 9.4.0 </li>
-	<li> make 4.2.1 </li>
+	<li> python (3.8) </li>
+	<li> scikit-learn (1.0.2) </li>
+	<li> some python modules: scikit-learn (1.0.2), numpy (1.22.3), argparse (1.1), pandas (1.4.2), matplotlib (3.5.1).
+	<li> g++ (9.4.0) </li>
+	<li> make (4.2.1) </li>
 </ul>
+
+You can use **docker** to run a container running Ubuntu and with all the dependensies installed. Use the script *start_docker_container.sh* in the main folder to build and run the docker. It requires to have installed **docker**.
 
 ## Obtain the datasets
 
@@ -24,9 +41,20 @@ You can produce the training sets and test sets used in our experimental evaluat
 
 `python3 split_webspam.py`
 
-The command for splitting the REWEMA dataset requires uncompressing the zip folder in the rewema folder in the datasets folder.
+If you want to use another dataset, you have to create the folder *datasets/<dataset_name>/* and the following folders in it:
 
-For the webspam dataset, download the normalized unigram version of the dataset, put the raw dataset in the webspam/dataset folder and execute `python3 prepare_webspam.py` inside the utils folder before executing the command for splitting the dataset.
+- *dataset/*, that will contain the training_set, test_set e validation_set.</li>
+- *models/*, *models/rf/*, *models/lse/* and *models/lse/validation*, that will contain the trained RandomForests and large-spread ensembles.</li>
+
+
+The datasets in the *datasets/<dataset_name>/dataset/* must be named as follows:
+
+- *training_set_normalized* for the training set;</li>
+- *test_set_normalized* for the test set;</li>
+- *training_set_normalized_gridsearch* for the training set obtained by dividing the entire training set in the (sub)-training set and validation set;</li>
+- *validation_set_normalized* for the validation set obtained by dividing the entire training set in the (sub)-training set and validation set.</li>
+
+Note that the LSE.py tool works only with datasets with feature values normalized in 0-1 range at the moment.
 
 ## Compile the tools
 
@@ -70,6 +98,32 @@ Run our LSE tool in the <em>src</em> folder to train large-spread ensembles. It 
 Example:
 
 `python3 LSE.py 0.015 --dataset mnist26 --trees 101 --depth 6 --rounds 1000 --random_seed 0 --m 2 --s 4 --jobs 6 --dump_large_spread 1 --min_pert 0.0075 --max_pert 0.015 --validation`
+
+## Basic test
+
+After compiling all the tools, you can run this simple test to check that everything works fine:
+
+1. Train a small large-spread ensemble of 25 trees, maximum depth 4 and perturbation 0.015 by executing
+
+   `python3 LSE.py 0.015 --dataset mnist26 --trees 25 --depth 4 --rounds 100 --random_seed 0 --m 2 --s 4 --jobs 6 --dump_large_spread 1 --min_pert 0.0075 --max_pert 0.015 --validation`
+
+   After the execution of this command, you should find the file with extension *.silva* of the large-spread ensemble in the *datasets/mnist26/dataset/lse/validation* folder.
+
+1. Train a small RandomForest of 25 trees, maximum depth 4 and perturbation 0.015 by executing
+   
+   `python3 train_forest.py mnist26 25 4 0`
+
+   After the execution of this command, you should find the file with extension *.silva* of the rf ensemble in the *datasets/mnist26/dataset/rf* folder.
+
+3. Observe the robustness computed by SILVA using the following command. The output will be redirected in a log file.
+   
+   `./silva/src/silva ../datasets/mnist26/models/lse/validation/lse_part_rand_25_4_0.015_100_0_m2_s4_mnpert0.0075_mxpert0.015.silva ../datasets/mnist26/dataset/test_set_normalized.csv --perturbation l_inf 0.015 --index-of-instance -1 > log_basic_test_silva.txt`
+
+
+4. Observe the robustness computed by CARVE using the following command. The output will be redirected in a log file. The result should match the result obtained by using SILVA.
+   
+   `./carve/build/verify  -i ../datasets/mnist26/models/lse/validation/lse_part_rand_25_4_0.015_100_0_m2_s4_mnpert0.0075_mxpert0.015.silva -t ../datasets/mnist26/dataset/test_set_normalized.csv -p inf -k 0.015 -ioi -1 > log_basic_test_carve.txt`
+
 
 ## Train the models
 
