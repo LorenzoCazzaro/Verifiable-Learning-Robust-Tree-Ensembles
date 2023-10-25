@@ -222,14 +222,14 @@ Use the script <em>test_total_efficiency.py</em> in the <em>src</em> folder. It 
 	<li> The name of the analyser (SILVA or CARVE). </li>
 	<li> The path of the test set w.r.t. the <em>src</em> folder </li>
 	<li> The path of the test model w.r.t. the <em>src</em> folder </li>
-	<li> k </li>
+	<li> k - the perturbation</li>
 	<li> the time limit </li>
 	<li> the memory limit </li>
 </ul>
 
 To reproduce our experiment, run:
 
-`python3 test_total_efficiency.py SILVA ../datasets/mnist26/dataset/test_set_normalized.csv ../datasets/mnist26/models/rf/rf_101_6_0.silva 0.015 1 60 64`
+`python3 test_total_efficiency.py SILVA ../datasets/mnist26/dataset/test_set_normalized.csv ../datasets/mnist26/models/rf/rf_101_6_0_valueFalse.silva 0.015 1 60 64`
 
 `python3 test_total_efficiency.py CARVE ../datasets/mnist26/dataset/test_set_normalized.csv ../datasets/mnist26/models/lse/validation/lse_part_rand_101_6_0.015_500_0_m2_s4_mnpert0.0075_mxpert0.015.silva 0.015 1 60 64`
 
@@ -244,13 +244,3 @@ To plot the sub-figures, use the following commands (change the dataset names an
 `python3 plot_performance_by_ntrees.py mnist26 25-51-75-101 6 0.015-0.01-0.005 0 500 6 6 0.015-0.01-0.005 0.0225-0.015-0.0075 performance_trees_rewema`
 
 `python3 plot_performance_by_depth.py rewema 101 3-4-5-6 0.015-0.01-0.005 0 500 6 6 0.015-0.01-0.005 0.0225-0.015-0.0075 performance_depth_rewema`
-
-### Table 6
-
-Use the following command to verify each LSE previously trained following the section "Train large-spread ensembles" and generate a report for each model containing also the accuracy and robustness (change the dataset and the perturbation accordingly):
-
-`python3 verify_only_gridsearch.py mnist26 101 6 0.01 0.5-1 1-1.5`
-
-Then, use the following command to display the best model for each dataset and model size, along with the best hyper-parameters:
-
-`python3 find_best_model.py mnist26 101 6 0.015 0 100-500 2-4-6 1-2-3-4-5-6 0.5-1 1-1.5`
