@@ -13,16 +13,22 @@ RUN apt install python3.8-distutils -y
 RUN apt-get install python3-pip -y
 RUN apt install wget
 RUN apt install xz-utils
+RUN apt install cmake
 
 WORKDIR /home
 
 RUN mkdir /home/src
+RUN mkdir /home/datasets
 
 COPY requirements.txt ./
 
 RUN pip3 install -r requirements.txt
 
 COPY src/ /home/src
+
+COPY datasets/ /home/datasets
+
+COPY setup.sh /home
 
 RUN apt install -y nano
 

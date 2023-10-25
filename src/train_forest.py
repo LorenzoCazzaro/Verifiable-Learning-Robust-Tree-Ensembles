@@ -1,6 +1,6 @@
 import pandas as pd
 from sklearn.ensemble import RandomForestClassifier
-from silva.trainers.classifier_mapper import ClassifierMapper
+from silva.src.trainers.classifier_mapper import ClassifierMapper
 import argparse
 
 _SAVE_RF_PATH = "rf/"
@@ -18,7 +18,7 @@ parser.add_argument('--n_jobs', type=int, default=1)
 parser.add_argument('--validation', action="store_true")
 args = parser.parse_args()
 
-data = pd.read_csv(_DATASET_FOLDER.format(args.dataset) + ("/training_set_normalized.csv" if not args.validation else "/training_set_normalized_gridsearch.csv"), delimiter = ",", skiprows = [0], header=None).to_numpy()
+data = pd.read_csv(_DATASET_FOLDER.format(args.dataset) + ("training_set_normalized.csv" if not args.validation else "training_set_normalized_gridsearch.csv"), delimiter = ",", skiprows = [0], header=None).to_numpy()
 Y = data[:, 0].astype(int).astype(str)
 X = data[:, 1:].astype(float)
 

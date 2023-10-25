@@ -14,6 +14,7 @@ os.system("mkdir " + folder_path + "/models/lse")
 os.system("mkdir " + folder_path + "/models/lse/validation")
 os.system("wget https://www.csie.ntu.edu.tw/~cjlin/libsvmtools/datasets/binary/webspam_wc_normalized_unigram.svm.xz")
 os.system("unxz webspam_wc_normalized_unigram.svm.xz")
+os.system("mv webspam_wc_normalized_unigram.svm ../../datasets/webspam/dataset/")
 os.system("python prepare_webspam.py")
 
 #load dataset
