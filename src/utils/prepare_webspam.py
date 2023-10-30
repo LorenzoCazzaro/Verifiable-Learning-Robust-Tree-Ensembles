@@ -1,7 +1,7 @@
 import numpy as np
 import os
 
-f = open("./webspam_wc_normalized_unigram.svm", "r")
+f = open("../../datasets/webspam/dataset/webspam_wc_normalized_unigram.svm", "r")
 lines = f.readlines()
 n_features = 254
 data = np.zeros((len(lines), n_features+1))
