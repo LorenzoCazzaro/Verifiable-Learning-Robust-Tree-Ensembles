@@ -102,7 +102,7 @@ Example:
 
 ## Basic test
 
-After compiling all the tools, you can run this simple test to check that everything works fine:
+After compiling all the tools, you can run this simple test in the *src* folder to check that everything works fine:
 
 1. Train a small large-spread ensemble of 25 trees, maximum depth 4 and perturbation 0.015 by executing
 
