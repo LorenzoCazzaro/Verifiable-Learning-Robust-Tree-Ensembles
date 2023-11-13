@@ -46,6 +46,7 @@ If you want to use another dataset, you have to create the folder *datasets/<dat
 - *dataset/*, that will contain the training_set, test_set e validation_set.</li>
 - *models/*, *models/rf/*, *models/lse/* and *models/lse/validation*, that will contain the trained RandomForests and large-spread ensembles.</li>
 
+You can run the script *setup.sh* for obtaining the same splittings of the datasets used in our experimental evaluation.
 
 The datasets in the *datasets/<dataset_name>/dataset/* must be named as follows:
 
