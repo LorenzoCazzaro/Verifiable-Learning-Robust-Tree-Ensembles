@@ -6,14 +6,14 @@ RUN apt-get install software-properties-common -y
 RUN apt update -y && apt-get upgrade -y
 RUN add-apt-repository ppa:deadsnakes/ppa -y
 RUN apt-get update -y
+RUN apt install wget
+RUN apt install xz-utils
+RUN apt install cmake
 RUN apt-get install python3.8 -y
 RUN update-alternatives --install /usr/bin/python3 python3 /usr/bin/python3.8 2
 RUN update-alternatives --set python3 /usr/bin/python3.8
 RUN apt install python3.8-distutils -y
 RUN apt-get install python3-pip -y
-RUN apt install wget
-RUN apt install xz-utils
-RUN apt install cmake
 
 WORKDIR /home
 
