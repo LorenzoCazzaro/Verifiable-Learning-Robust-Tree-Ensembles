@@ -27,13 +27,13 @@ In the paper you may find some details of the system in which we run the experim
 	<li> make (4.2.1) </li>
 </ul>
 
-You can use **docker** to run a container running Ubuntu and with all the dependensies installed. Use the script *start_docker_container.sh* in the main folder to build and run the docker. It requires to have installed **docker**.
+You can use **docker** to run a container running Ubuntu and with all the dependencies installed. Use the script *start_docker_container.sh* in the main folder to build and run the docker. It requires to have installed **docker**.
 
 ## Obtain the datasets
 
 You can produce the training sets and test sets used in our experimental evaluation by executing the following scripts in the <em>src/utils</em> folder:
 
-`python3 split_mnist.py`
+`python3 split_mnist.py 2 6`
 
 `python3 split_fmnist.py 0 3`
 
@@ -46,7 +46,6 @@ If you want to use another dataset, you have to create the folder *datasets/<dat
 - *dataset/*, that will contain the training_set, test_set e validation_set.</li>
 - *models/*, *models/rf/*, *models/lse/* and *models/lse/validation*, that will contain the trained RandomForests and large-spread ensembles.</li>
 
-You can run the script *setup.sh* for obtaining the same splittings of the datasets used in our experimental evaluation.
 
 The datasets in the *datasets/<dataset_name>/dataset/* must be named as follows:
 
@@ -82,18 +81,18 @@ See the README.md in the <em>src/carve</em> folder.
 Run our LSE tool in the <em>src</em> folder to train large-spread ensembles. It requires:
 
 <ul>
-	<li> the perturbation k </li>
-	<li> the name of the dataset</li>
-	<li> the number of trees </li>
-	<li> the maximum depth </li>
-	<li> the factor multiplied to the initial number of trees (e.g., 2) </li>
-	<li> the maximum number of rounds </li>
-	<li> the number of subsets of features for the hierarchical training </li>
-	<li> the n_jobs for training the initial random forest </li>
-	<li> 1 or 0 for saving the resulting large spread or not</li>
-	<li> the minimum perturbation to apply to the thresholds to enforce the large-spread condition</li>
-	<li> the maximum perturbation to apply to the thresholds to enforce the large-spread condition</li>
-	<li> if training the model on the 80% of the training set (20% is the validation set) or the entire training set</li>
+	<li> the perturbation k; </li>
+	<li> the name of the dataset;</li>
+	<li> the number of trees; </li>
+	<li> the maximum depth; </li>
+	<li> the factor multiplied to the initial number of trees (e.g., 2); </li>
+	<li> the maximum number of rounds; </li>
+	<li> the number of subsets of features for the hierarchical training; </li>
+	<li> the n_jobs for training the initial random forest; </li>
+	<li> 1 or 0 for saving the resulting large spread or not; </li>
+	<li> the minimum perturbation to apply to the thresholds to enforce the large-spread condition; </li>
+	<li> the maximum perturbation to apply to the thresholds to enforce the large-spread condition; </li>
+	<li> if training the model on the 80% of the training set (20% is the validation set) or the entire training set.</li>
 </ul>
 
 Example:
@@ -102,7 +101,7 @@ Example:
 
 ## Basic test
 
-After compiling all the tools, you can run this simple test in the *src* folder to check that everything works fine:
+After compiling all the tools, you can run this simple test to check that everything works fine:
 
 1. Train a small large-spread ensemble of 25 trees, maximum depth 4 and perturbation 0.015 by executing
 
@@ -114,7 +113,7 @@ After compiling all the tools, you can run this simple test in the *src* folder 
    
    `python3 train_forest.py mnist26 25 4 0`
 
-   After the execution of this command, you should find the file with extension *.silva* of the rf ensemble in the *datasets/mnist26/dataset/rf* folder.
+   After the execution of this command, you should find the file with extension *.silva* of the traditional tree-based ensemble in the *datasets/mnist26/dataset/rf* folder.
 
 3. Observe the robustness computed by SILVA using the following command. The output will be redirected in a log file.
    
@@ -132,19 +131,19 @@ All the models are in the <em>.silva</em> format. See the repository of SILVA fo
 
 ### Train forests
 
-Execute the bash script <em>train_forests.sh</em> in the <em>src</em> folder after having generated the datasets. See the <em>train_forests.sh</em> script for examples about how to train random forests.
+Execute the bash script <em>train_forests.sh</em> in the <em>src</em> folder after having generated the datasets. See the <em>train_forests.sh</em> script for examples about training RandomForests.
 
 ### Train large-spread ensembles
 Use the python script <em>train_lses.py</em> in the <em>src</em> folder, that requires:
 <ul>
-	<li> list of dataset separated by "/". </li>
-	<li> Number of trees of the large spread ensemble</li>
-	<li> Depth of the large spread ensemble </li>
-	<li> list of k separated by "-" </li>
-	<li> list of number of rounds separated by "-" </li>
-	<li> random state </li>
-	<li> factor that multiplies the initial number of trees </li>
-	<li> list of number of subsets considered in hierarchical training, separated by "-" </li>
+	<li> list of dataset separated by "/"; </li>
+	<li> number of trees of the large spread ensemble;</li>
+	<li> depth of the large spread ensemble; </li>
+	<li> list of k separated by "-"; </li>
+	<li> list of number of rounds separated by "-"; </li>
+	<li> random state; </li>
+	<li> factor that multiplies the initial number of trees; </li>
+	<li> list of number of subsets considered in hierarchical training, separated by "-". </li>
 </ul>
 
 To reproduce our experiment, run in the <em>src</em> folder:
@@ -157,13 +156,13 @@ To reproduce our experiment, run in the <em>src</em> folder:
 
 `python3 train_lses.py mnist26/rewema/fashion_mnist0-3 101 6 0.005-0.010-0.015 0 100-500 2-4-6 1-2-3-4-5-6 0.0025-0.005-0.0075 0.005-0.010-0.015 --validation`
 
-`python3 train_lses.py mnist26/rewema/fashion_mnist0-3 25 4 0.0002-0.0004-0.0006 0 100-500 2-4-6 1-2-3-4-5-6 0.0002-0.0004-0.0006 0.0003-0.0006-0.0009 --validation`
+`python3 train_lses.py webspam 25 4 0.0002-0.0004-0.0006 0 100-500 2-4-6 1-2-3-4-5-6 0.0002-0.0004-0.0006 0.0003-0.0006-0.0009 --validation`
 
-`python3 train_lses.py mnist26/rewema/fashion_mnist0-3 25 4 0.0002-0.0004-0.0006 0 100-500 2-4-6 1-2-3-4-5-6 0.0001-0.0002-0.0003 0.0002-0.0004-0.0006 --validation`
+`python3 train_lses.py webspam 25 4 0.0002-0.0004-0.0006 0 100-500 2-4-6 1-2-3-4-5-6 0.0001-0.0002-0.0003 0.0002-0.0004-0.0006 --validation`
 
-`python3 train_lses.py mnist26/rewema/fashion_mnist0-3 101 6 0.0002-0.0004-0.0006 0 100-500 2-4-6 1-2-3-4-5-6 0.0002-0.0004-0.0006 0.0003-0.0006-0.0009 --validation`
+`python3 train_lses.py webspam 101 6 0.0002-0.0004-0.0006 0 100-500 2-4-6 1-2-3-4-5-6 0.0002-0.0004-0.0006 0.0003-0.0006-0.0009 --validation`
 
-`python3 train_lses.py mnist26/rewema/fashion_mnist0-3 101 6 0.0002-0.0004-0.0006 0 100-500 2-4-6 1-2-3-4-5-6 0.0001-0.0002-0.0003 0.0002-0.0004-0.0006 --validation`
+`python3 train_lses.py webspam 101 6 0.0002-0.0004-0.0006 0 100-500 2-4-6 1-2-3-4-5-6 0.0001-0.0002-0.0003 0.0002-0.0004-0.0006 --validation`
 
 **Warning**: the training of the large-spread ensembles with the highest perturbation and no hierarchical training (1 subset of features) may require some time.
 
@@ -173,7 +172,7 @@ Reproduce the results of tables and figures only after training all the models (
 
 ### Table 3
 
-To generate a row of table 3, e.g., models with 101 tree, maximum depth 6 and perturbation 0.015, we run the following command to retrieve the accuracy provided by SILVA:
+To generate a row of table 3, e.g., models with 101 tree and maximum depth 6 trained on MNIST and perturbation 0.015, we run the following command to retrieve the accuracy provided by SILVA:
 
 `./silva/src/silva ../datasets/mnist26/models/rf/rf_101_6_0_valFalse.silva ../datasets/mnist26/dataset/test_set_normalized.csv --perturbation l_inf 0.015`
 
@@ -187,11 +186,11 @@ Do the same for the corresponding large-spread ensemble by changing the model pa
 
 Run <em>test_analyzer_scalability.py</em> in the <em>src</em> folder. It requires:
 <ul>
-	<li> the analyzer identifier (SILVA or CARVE) </li>
-	<li> the path of the dataset </li>
-	<li> the path of the large-spread ensemble <li>
-	<li> the perturbation k </li>
-	<li> the number of times to repeat the test </li>
+	<li> the analyzer identifier (SILVA or CARVE); </li>
+	<li> the path of the dataset; </li>
+	<li> the path of the large-spread ensemble; <li>
+	<li> the perturbation k; </li>
+	<li> the number of times to repeat the test. </li>
 </ul>
 
 Run the following commands to run our experiment:
@@ -208,7 +207,7 @@ The two commands will produce two logs <em>log_scalability_SILVA_rf_101_6_0_0.01
 
 ### Table 4
 
-Use the following commands to obtain a row of the table:
+Use the following commands to obtain a row of the table (in the <em>src/carve/build</em>):
 
 `./verify -i ../../../datasets/<dataset_name>/models/validation/<lse_name.silva> -t ../../../datasets/<dataset_name>/dataset/<test_set_csv_name.csv> -p inf -k <k> -ioi -1`
 
@@ -220,12 +219,12 @@ Use the following commands to obtain a row of the table:
 
 Use the script <em>test_total_efficiency.py</em> in the <em>src</em> folder. It requires:
 <ul>
-	<li> The name of the analyser (SILVA or CARVE). </li>
-	<li> The path of the test set w.r.t. the <em>src</em> folder </li>
-	<li> The path of the test model w.r.t. the <em>src</em> folder </li>
-	<li> k - the perturbation</li>
-	<li> the time limit </li>
-	<li> the memory limit </li>
+	<li> the name of the analyser (SILVA or CARVE); </li>
+	<li> the path of the test set w.r.t. the <em>src</em> folder; </li>
+	<li> the path of the test model w.r.t. the <em>src</em> folder; </li>
+	<li> k - the perturbation;</li>
+	<li> the time limit; </li>
+	<li> the memory limit. </li>
 </ul>
 
 To reproduce our experiment, run:
@@ -242,6 +241,6 @@ The resulting csv file "./log_total_scalability_..." in the <em>src</em> folder 
 
 To plot the sub-figures, use the following commands (change the dataset names and the perturbations accordingly):
 
-`python3 plot_performance_by_ntrees.py mnist26 25-51-75-101 6 0.015-0.01-0.005 0 500 6 6 0.015-0.01-0.005 0.0225-0.015-0.0075 performance_trees_rewema`
+`python3 plot_performance_by_ntrees.py mnist26/rewema/fashion_mnist0-3 25-51-75-101 6 0.015-0.01-0.005 0 500 6 6 0.015-0.01-0.005 0.0225-0.015-0.0075 performance_trees_rewema`
 
 `python3 plot_performance_by_depth.py rewema 101 3-4-5-6 0.015-0.01-0.005 0 500 6 6 0.015-0.01-0.005 0.0225-0.015-0.0075 performance_depth_rewema`
