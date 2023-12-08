@@ -182,6 +182,10 @@ Then, we run the verifier for each istance of the test set with a timeout of 1 s
 
 Do the same for the corresponding large-spread ensemble by changing the model path.
 
+We provide a Python script to reproduce the parts of Table 3. Execute the following command to reproduce the results for a specific dataset:
+
+`python3 generate_table_3.py mnist26/fashion_mnist0-3/rewema/webspam 1`
+
 ### Figure 3
 
 Run <em>test_analyzer_scalability.py</em> in the <em>src</em> folder. It requires:
@@ -214,6 +218,10 @@ Use the following commands to obtain a row of the table (in the <em>src/carve/bu
 `./verify -i ../../../datasets/<dataset_name>/models/validation/<lse_name.silva> -t ../../../datasets/<dataset_name>/dataset/<test_set_csv_name.csv> -p 1 -k <k> -ioi -1`
 
 `./verify -i ../../../datasets/<dataset_name>/models/validation/<lse_name.silva> -t ../../../datasets/<dataset_name>/dataset/<test_set_csv_name.csv> -p 2 -k <k> -ioi -1`
+
+We provide a Python script to reproduce the parts of Table 4. Execute the following command to reproduce the results for a specific dataset:
+
+`python3 generate_table_4.py mnist26/fashion_mnist0-3/rewema/webspam inf-2-1 1`
 
 ### Table 5
 
