@@ -249,6 +249,6 @@ The resulting csv file "./log_total_scalability_..." in the <em>src</em> folder 
 
 To plot the sub-figures, use the following commands (change the dataset names and the perturbations accordingly):
 
-`python3 plot_performance_by_ntrees.py mnist26/rewema/fashion_mnist0-3 25-51-75-101 6 0.015-0.01-0.005 0 500 6 6 0.015-0.01-0.005 0.0225-0.015-0.0075 performance_trees_rewema`
+`python3 plot_performance_by_ntrees.py rewema 25-51-75-101 6 0.015-0.01-0.005 0 500 6 6 0.015-0.01-0.005 0.0225-0.015-0.0075 performance_trees_rewema`
 
 `python3 plot_performance_by_depth.py rewema 101 3-4-5-6 0.015-0.01-0.005 0 500 6 6 0.015-0.01-0.005 0.0225-0.015-0.0075 performance_depth_rewema`
