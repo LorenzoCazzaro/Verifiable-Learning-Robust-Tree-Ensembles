@@ -252,3 +252,32 @@ To plot the sub-figures, use the following commands (change the dataset names an
 `python3 plot_performance_by_ntrees.py rewema 25-51-75-101 6 0.015-0.01-0.005 0 500 6 6 0.015-0.01-0.005 0.0225-0.015-0.0075 performance_trees_rewema`
 
 `python3 plot_performance_by_depth.py rewema 101 3-4-5-6 0.015-0.01-0.005 0 500 6 6 0.015-0.01-0.005 0.0225-0.015-0.0075 performance_depth_rewema`
+
+
+## Credits
+
+If you use this artifact in your work, please add a reference/citation to our paper. You can use the following BibTeX entry:
+
+```
+@inproceedings{10.1145/3576915.3623100,
+author = {Calzavara, Stefano and Cazzaro, Lorenzo and Pibiri, Giulio Ermanno and Prezza, Nicola},
+title = {Verifiable Learning for Robust Tree Ensembles},
+year = {2023},
+isbn = {9798400700507},
+publisher = {Association for Computing Machinery},
+address = {New York, NY, USA},
+url = {https://doi.org/10.1145/3576915.3623100},
+doi = {10.1145/3576915.3623100},
+booktitle = {Proceedings of the 2023 ACM SIGSAC Conference on Computer and Communications Security},
+pages = {1850–1864},
+numpages = {15},
+keywords = {verification and program analysis for machine, robustness, decision tree ensembles, learning models, machine learning and security},
+location = {, Copenhagen, Denmark, },
+series = {CCS '23}
+}
+```
+
+## Support
+
+If you want to ask questions about the artifact and notify bugs, feel free to contact us by sending an email to lorenzo.cazzaro@unive.it.
+
