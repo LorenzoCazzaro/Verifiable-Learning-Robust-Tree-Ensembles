@@ -82,8 +82,7 @@ int main(int argc, char** argv) {
         uint32_t num_features = 0;
         is >> line;  // skip #
         is >> num_queries;
-        if (ioi >= 0)
-            num_queries = 1;
+        if (ioi >= 0) num_queries = 1;
         is >> num_features;
         assert(num_features == T.num_features());
         x.reserve(num_features);
@@ -97,16 +96,14 @@ int main(int argc, char** argv) {
                 labels.push_back(y);
             }
         } else {
-            for (uint32_t i = 0; i != ioi; ++i) {
-                std::getline(in, line);
-            }
+            for (uint32_t i = 0; i != ioi; ++i) { std::getline(in, line); }
             parse_row_in_csv(in, line, x, y);
             queries.push_back(x);
             labels.push_back(y);
         }
         in.close();
         std::cout << "performing " << num_queries << " queries..." << std::endl;
-        //added variables to check the consistency with SILVA results
+        // added variables to check the consistency with SILVA results
         uint32_t n_correct = 0;
         uint32_t n_stable = 0;
         uint32_t n_unstable = 0;
@@ -118,33 +115,37 @@ int main(int argc, char** argv) {
             x = queries[i];
             y = labels[i];
             label_t y_pred = T.predict(x);
-            
+
             bool same_prediction = y_pred == y;
             bool stable = T.stable(x, y_pred, p, k);
-            n_correct    += same_prediction;
-            n_stable     += stable;
-            n_unstable   += !stable;
-            n_robust     += same_prediction && stable;
-            n_fragile    += same_prediction && !stable;
+            n_correct += same_prediction;
+            n_stable += stable;
+            n_unstable += !stable;
+            n_robust += same_prediction && stable;
+            n_fragile += same_prediction && !stable;
             auto end_x_sample = clock_type::now();
-            double verification_time_x_instance = std::chrono::duration_cast<std::chrono::milliseconds>(end_x_sample - start_x_sample).count();
+            double verification_time_x_instance =
+                std::chrono::duration_cast<std::chrono::milliseconds>(end_x_sample - start_x_sample)
+                    .count();
             total_verification_time += verification_time_x_instance;
             cout << "query " << i << ": ";
             cout << "pred label " << y_pred << ", true label " << y << ", STATUS: ";
-            cout << (stable ? (same_prediction ? "ROBUST" : "VULNERABLE") : (same_prediction ? "FRAGILE" : "BROKEN")) << endl;
-            cout << "Time required per query " << i << ": " << verification_time_x_instance << " [msec]" << endl;
+            cout << (stable ? (same_prediction ? "ROBUST" : "VULNERABLE")
+                            : (same_prediction ? "FRAGILE" : "BROKEN"))
+                 << endl;
+            cout << "Time required per query " << i << ": " << verification_time_x_instance
+                 << " [msec]" << endl;
         }
-        
-        std::cout << "3. test " << num_queries << " queries: " << total_verification_time << " [msec] ("
-                  << total_verification_time / num_queries << " msec/query)" << std::endl;
+
+        std::cout << "3. test " << num_queries << " queries: " << total_verification_time
+                  << " [msec] (" << total_verification_time / num_queries << " msec/query)"
+                  << std::endl;
 
         std::cout << "n queries correctly classified: " << n_correct << std::endl;
-        
-        std::cout << "accuracy: " << (n_correct * 100.0) / num_queries << "%"
-                  << std::endl;
 
-        std::cout << "robustness: " << (n_robust * 100.0) / num_queries << "%"
-                  << std::endl;
+        std::cout << "accuracy: " << (n_correct * 100.0) / num_queries << "%" << std::endl;
+
+        std::cout << "robustness: " << (n_robust * 100.0) / num_queries << "%" << std::endl;
 
         std::cout << "n robust queries: " << n_robust << std::endl;
 

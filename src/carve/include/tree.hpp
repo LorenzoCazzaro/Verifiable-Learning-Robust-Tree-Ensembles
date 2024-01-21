@@ -58,15 +58,16 @@ struct tree {
 
     label_t predict(instance_t const& x) const { return predict(x, m_root); }
 
-    //use the hyperrectangles that annotates the leaves to find the perturbations that allows the instance x to reach the leaves of the tree
+    // use the hyperrectangles that annotates the leaves to find the perturbations that allows the
+    // instance x to reach the leaves of the tree
     std::vector<min_perturbation> reachable(instance_t const& x, float p, float k) const {
-        
         assert(x.size() == m_num_features);
         std::vector<min_perturbation> L;
         L.reserve(m_num_leaves);
 
-        for (auto const& hr : m_hyper_rectangles) { //consider all the hyperrectangles that annotate the leaves of the tree
-            if(!hr.empty) {
+        for (auto const& hr : m_hyper_rectangles) {  // consider all the hyperrectangles that
+                                                     // annotate the leaves of the tree
+            if (!hr.empty) {
                 assert(hr.H.size() == m_num_features);
                 min_perturbation mp;
                 mp.label = hr.label;
@@ -75,7 +76,7 @@ struct tree {
                     auto l_i = hr.H[i].first;
                     auto r_i = hr.H[i].second;
                     auto x_i = x[i];
-                    //compute the perturbation mp as described in the paper
+                    // compute the perturbation mp as described in the paper
                     if (x_i <= l_i) {
                         mp.delta[i] = std::nextafterf(l_i - x_i, constants::inf);
                     } else if (x_i > r_i) {
@@ -84,7 +85,9 @@ struct tree {
                 }
 
                 mp.norm = norm(mp.delta, p);
-                if (mp.norm <= k) L.push_back(mp); //the perturbation allows to reach the leaf only if its norm is less than or equal k
+                if (mp.norm <= k)
+                    L.push_back(mp);  // the perturbation allows to reach the leaf only if its norm
+                                      // is less than or equal k
             }
         }
 
@@ -93,33 +96,34 @@ struct tree {
 
     uint32_t num_features() const { return m_num_features; }
 
-
     void print(std::ostream& out) {
-        out << "Print decision tree, num features " << m_num_features << ", num classes " << m_num_classes << endl;
+        out << "Print decision tree, num features " << m_num_features << ", num classes "
+            << m_num_classes << endl;
         print_aux(m_root, out, "");
     }
 
-    void get_thresholds_from_root(std::map<uint32_t, list<float>>& threshold_map){
+    void get_thresholds_from_root(std::map<uint32_t, list<float>>& threshold_map) {
         get_thresholds(this->m_root, threshold_map);
-    } 
+    }
 
 private:
     uint32_t m_num_leaves;
     uint32_t m_num_features;
     int m_num_classes;
     node* m_root;
-    std::vector<hyper_rectangle> m_hyper_rectangles; //set of hyperrectangles obtained after the annotation of the leaves of the tree
+    std::vector<hyper_rectangle> m_hyper_rectangles;  // set of hyperrectangles obtained after the
+                                                      // annotation of the leaves of the tree
 
     bool is_leaf(node const* n) const { return n->left == nullptr and n->right == nullptr; }
 
-    //predict the label given the instance and the root of the tree n
+    // predict the label given the instance and the root of the tree n
     label_t predict(instance_t const& x, node const* n) const {
         if (is_leaf(n)) return n->label;
         if (x[n->feature] <= n->threshold) return predict(x, n->left);
         return predict(x, n->right);
     }
 
-    //annotate the leaves of the tree whose radix is n
+    // annotate the leaves of the tree whose radix is n
     void annotate(node const* n, hyper_rectangle& parent_hr) {
         if (is_leaf(n)) {
             parent_hr.label = n->label;
@@ -131,7 +135,8 @@ private:
         hyper_rectangle l_hr = parent_hr;
         hyper_rectangle r_hr = parent_hr;
         feature_t feature = n->feature;
-        //build the hyperrectangle from the parent hyperrectangles by limiting the interval on the feature using the threshold of the considered node
+        // build the hyperrectangle from the parent hyperrectangles by limiting the interval on the
+        // feature using the threshold of the considered node
         l_hr.H[feature].second = std::min(l_hr.H[feature].second, n->threshold);
         r_hr.H[feature].first = std::max(r_hr.H[feature].first, n->threshold);
         annotate(n->left, l_hr);
@@ -196,29 +201,28 @@ private:
     }
 
     void print_aux(node* u, std::ostream& out, string identation_str) {
-        if(u) {
-            if(u->left || u->right) {
-                out << identation_str + "INTERNAL NODE: " << u->feature << " <= " << u->threshold << endl;
-                print_aux(u->left, out, identation_str+"\t");
-                print_aux(u->right, out, identation_str+"\t");
+        if (u) {
+            if (u->left || u->right) {
+                out << identation_str + "INTERNAL NODE: " << u->feature << " <= " << u->threshold
+                    << endl;
+                print_aux(u->left, out, identation_str + "\t");
+                print_aux(u->right, out, identation_str + "\t");
             } else {
                 out << identation_str + "LEAF NODE: " << u->label << endl;
             }
         }
     }
 
-    void get_threshold(node const* n, std::map<uint32_t, list<float>>& threshold_map){
+    void get_threshold(node const* n, std::map<uint32_t, list<float>>& threshold_map) {
         threshold_map[n->feature].push_back(n->threshold);
     }
 
-    //return a map with features as key and lists of thresholds per feature as values of the tree
-    void get_thresholds(node const* n, std::map<uint32_t, list<float>>& threshold_map){
+    // return a map with features as key and lists of thresholds per feature as values of the tree
+    void get_thresholds(node const* n, std::map<uint32_t, list<float>>& threshold_map) {
         if (!is_leaf(n)) {
             get_threshold(n, threshold_map);
-            if (n->left)
-                get_thresholds(n->left, threshold_map);
-            if (n->right)
-                get_thresholds(n->right, threshold_map);
+            if (n->left) get_thresholds(n->left, threshold_map);
+            if (n->right) get_thresholds(n->right, threshold_map);
         }
     }
 };

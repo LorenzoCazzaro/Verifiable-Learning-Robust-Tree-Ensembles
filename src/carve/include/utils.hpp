@@ -32,9 +32,9 @@ struct hyper_rectangle {
     label_t label;
     std::vector<std::pair<float_t, float_t>> H;
     bool empty = false;
-    void set_empty(){
-        for(uint32_t i = 0; i < H.size(); i++){
-            if(H[i].first >= H[i].second){
+    void set_empty() {
+        for (uint32_t i = 0; i < H.size(); i++) {
+            if (H[i].first >= H[i].second) {
                 empty = true;
                 return;
             }
@@ -61,7 +61,7 @@ double norm(instance_t const& x, float p) {
     }
 }
 
-        //compute the most voted label using boyer_moore majority voting algorithm
+// compute the most voted label using boyer_moore majority voting algorithm
 label_t boyer_moore_majority_voting(std::vector<label_t> const& labels) {
     label_t candidate = constants::invalid_label;
 

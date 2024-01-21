@@ -27,7 +27,8 @@ struct tree_ensemble {
         }
     }
 
-    //predict the label of an instance by obtaining the predictions from each tree of the ensemble and then using boyer_moore majority voting
+    // predict the label of an instance by obtaining the predictions from each tree of the ensemble
+    // and then using boyer_moore majority voting
     label_t predict(instance_t const& x) const {
         std::vector<label_t> labels;
         labels.reserve(num_trees());
@@ -35,7 +36,7 @@ struct tree_ensemble {
         label_t candidate = boyer_moore_majority_voting(labels);
         if (candidate == constants::invalid_label) {
             /* ensemble did not reach a consensus */
-            return labels.front(); // return label given by first tree
+            return labels.front();  // return label given by first tree
         }
         return candidate;
     }
@@ -45,12 +46,12 @@ struct tree_ensemble {
         return false;
     }
 
-    //annotate each tree of the ensemble
+    // annotate each tree of the ensemble
     void annotate() {
         for (auto& t : m_trees) t.annotate();
     }
 
-    //access a tree of the ensemble by index
+    // access a tree of the ensemble by index
     tree const& operator[](uint32_t i) const {
         assert(i < m_trees.size());
         return m_trees[i];
@@ -63,12 +64,13 @@ struct tree_ensemble {
         return m_trees.front().num_features();
     }
 
-    void print(std::ostream& out){
+    void print(std::ostream& out) {
         out << "Print tree ensemble, contains " << m_trees.size() << " trees" << endl;
         for (auto& t : m_trees) t.print(out);
     }
 
-    //check the stability of the tree ensemble on the instance x with label y under the attack A_{p,k}
+    // check the stability of the tree ensemble on the instance x with label y under the attack
+    // A_{p,k}
     bool stable(instance_t const& x, label_t y, float p, float k) const {
         const uint32_t m = num_trees();
         const uint32_t d = num_features();
@@ -108,7 +110,7 @@ struct tree_ensemble {
             }
         }
 
-        //compose the result (following the algorithm described in the paper)
+        // compose the result (following the algorithm described in the paper)
         if (num_unstable_trees >= m / 2 + 1) {
             std::sort(D.begin(), D.end(),
                       [](auto const& x, auto const& y) { return x.norm < y.norm; });
@@ -122,9 +124,10 @@ struct tree_ensemble {
         return true;
     }
 
-    //return a map with features as key and lists of thresholds per feature as values of the tree ensemble
-    void get_thresholds(std::map<uint32_t, list<float>>& threshold_map){
-        for(auto iter = this->m_trees.begin(); iter != this->m_trees.end(); iter++){
+    // return a map with features as key and lists of thresholds per feature as values of the tree
+    // ensemble
+    void get_thresholds(std::map<uint32_t, list<float>>& threshold_map) {
+        for (auto iter = this->m_trees.begin(); iter != this->m_trees.end(); iter++) {
             iter->get_thresholds_from_root(threshold_map);
         }
     }
@@ -133,4 +136,4 @@ private:
     std::vector<tree> m_trees;
 };
 
-}
+}  // namespace vl
